@@ -11,7 +11,7 @@ export function ToastProvider({ children }) {
 
     setTimeout(() => {
       setToasts((prev) => prev.filter((toast) => toast.id !== id));
-    }, 5000);
+    }, 1500);
   };
 
   return (
@@ -42,7 +42,6 @@ export function ToastProvider({ children }) {
 
 export const useToast = () => useContext(ToastContext);
 
-// Helper function to get icon for toast type
 const getIconForType = (type) => {
   const icons = {
     info: (

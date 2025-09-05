@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { useAuth } from "../contexts/AuthContext";
-import { useToast } from "../contexts/ToastContext";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "./ui/dialog";
-import { Input } from "./ui/input";
-import { Button } from "./ui/button";
+import { useAuth } from "../../contexts/AuthContext";
+import { useToast } from "../../contexts/ToastContext";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
 import { X, User, Sparkles } from "lucide-react";
 
 const LoginModal = ({ isOpen, onClose }) => {
@@ -52,16 +52,12 @@ const LoginModal = ({ isOpen, onClose }) => {
       <DialogContent className="sm:max-w-md rounded-lg py-12">
         <DialogHeader className="relative">
           <DialogTitle className="text-center text-2xl flex items-center justify-center gap-2">
-            <Sparkles className="h-6 w-6 text-blue-500" />
+            <Sparkles className="h-6 w-6 text-[#d3f633]" />
             Welcome to StudySpot PH
-           
           </DialogTitle>
-         
         </DialogHeader>
 
         <div className="flex flex-col items-center py-2 px-1">
-          
-
           <p className="text-center text-gray-600 mb-6">
             Enter your name to find and share the best study spots in the
             Philippines!
@@ -112,8 +108,6 @@ const LoginModal = ({ isOpen, onClose }) => {
               </Button>
             </div>
           </form>
-
-          
         </div>
       </DialogContent>
     </Dialog>
