@@ -4,8 +4,8 @@
     "name": "The Study Nook",
     "location": "Quezon City, Metro Manila",
     "price": 300,
-    "main_image": "/assets/space-1.jpg",
-    "images": ["/assets/space1_a.jpg", "/assets/space1_b.jpg"],
+    "main_image": "/assets/spaces/tsn/main.png",
+    "images": ["/assets/spaces/tsn/tsn1.png", "/assets/spaces/tsn/tsn2.png"],
     "description": "A quiet and cozy space perfect for deep focus sessions. Equipped with soundproof pods and an extensive library for a productive day.",
     "amenities": [
       "High-speed Wi-Fi",
@@ -19,11 +19,11 @@
   },
   {
     "id": 2,
-    "name": "WorkHaven Makati",
+    "name": "HavenWorks Makati",
     "location": "Makati City, Metro Manila",
     "price": 500,
-    "main_image": "/assets/space-2.jpg",
-    "images": ["/assets/space2_a.jpg", "/assets/space2_b.jpg"],
+    "main_image": "/assets/spaces/workhaven/main.jpg",
+    "images": ["/assets/spaces/workhaven/wkh1.jpg", "/assets/spaces/workhaven/wkh2.jpg"],
     "description": "A professional co-working environment in the heart of the business district. Ideal for meetings, collaborations, and networking.",
     "amenities": [
       "Fiber Internet",
@@ -37,11 +37,11 @@
   },
   {
     "id": 3,
-    "name": "QC Brainery",
+    "name": "Brainery Commons",
     "location": "Quezon City, Metro Manila",
     "price": 250,
-    "main_image": "/assets/space-3.jpg",
-    "images": ["/assets/space3_a.jpg", "/assets/space3_b.jpg"],
+    "main_image": "/assets/spaces/brainery/main.jpg",
+    "images": ["/assets/spaces/brainery/br1.jpg", "/assets/spaces/brainery/br2.jpg"],
     "description": "A study café built for students preparing for exams, with silent zones and focus rooms.",
     "amenities": [
       "Silent Pods",
@@ -55,11 +55,11 @@
   },
   {
     "id": 4,
-    "name": "Manila MindSpace",
+    "name": "MindSpace",
     "location": "Ermita, Manila",
     "price": 350,
-    "main_image": "/assets/space-4.jpg",
-    "images": ["/assets/space4_a.jpg"],
+    "main_image": "/assets/spaces/mindspace/main.jpg",
+    "images": ["/assets/spaces/mindspace/md1.jpg", "/assets/spaces/mindspace/md2.jpg" ],
     "description": "A modern co-working hub with sleek interiors and conference facilities perfect for professionals and freelancers.",
     "amenities": [
       "Conference Rooms",
@@ -73,11 +73,11 @@
   },
   {
     "id": 5,
-    "name": "Laguna Think Tank",
+    "name": "Think Tank",
     "location": "Los Baños, Laguna",
     "price": 280,
-    "main_image": "/assets/space-5.jpg",
-    "images": ["/assets/space5_a.jpg"],
+    "main_image": "/assets/spaces/laguna/main.jpg",
+    "images": ["/assets/spaces/laguna/lg1.jpg", "/assets/spaces/laguna/lg2.jpg"],
     "description": "A collaborative study and work hub located near the university belt of Laguna.",
     "amenities": [
       "Study Rooms",
@@ -91,11 +91,11 @@
   },
   {
     "id": 6,
-    "name": "Batangas Study Café",
+    "name": "Café Academia",
     "location": "Batangas City, Batangas",
     "price": 230,
-    "main_image": "/assets/space-6.jpg",
-    "images": ["/assets/space6_a.jpg"],
+    "main_image": "/assets/spaces/batstudy/main.jpg",
+    "images": ["/assets/spaces/batstudy/bats1.jpg", "/assets/spaces/batstudy/bats2.jpg"],
     "description": "A minimalist café dedicated to students and freelancers seeking a quiet, productive environment.",
     "amenities": [
       "Free Coffee",
@@ -109,11 +109,11 @@
   },
   {
     "id": 7,
-    "name": "Cavite Work Lounge",
+    "name": "The Work Den",
     "location": "Dasmariñas, Cavite",
     "price": 270,
-    "main_image": "/assets/space-7.jpg",
-    "images": ["/assets/space7_a.jpg"],
+    "main_image": "/assets/spaces/cavitework/main.jpg",
+    "images": ["/assets/spaces/cavitework/cav1.jpg", "/assets/spaces/cavitework/cav2.jpg"],
     "description": "A friendly co-working café with both individual and group seating options.",
     "amenities": [
       "Group Tables",
@@ -127,11 +127,11 @@
   },
   {
     "id": 8,
-    "name": "Alabang Focus Hub",
+    "name": "FocusForge",
     "location": "Muntinlupa City, Metro Manila",
     "price": 400,
-    "main_image": "/assets/space-8.jpg",
-    "images": ["/assets/space8_a.jpg"],
+    "main_image": "/assets/spaces/alabangfocus/main.jpg",
+    "images": ["/assets/spaces/alabangfocus/alab1.jpg", "/assets/spaces/alabangfocus/alab2.jpg"],
     "description": "A premium hub in Alabang for remote workers and corporate teams.",
     "amenities": [
       "Conference Rooms",
@@ -145,11 +145,11 @@
   },
   {
     "id": 9,
-    "name": "Quezon Study Lounge",
+    "name": "Lucena Study Loft",
     "location": "Lucena City, Quezon Province",
     "price": 220,
-    "main_image": "/assets/space-9.jpg",
-    "images": [],
+    "main_image": "/assets/spaces/qstud/main.jpg",
+    "images": ["/assets/spaces/qstud/qzn1.jpg", "/assets/spaces/qstud/qzn2.jpg"],
     "description": "A relaxed, budget-friendly lounge for students and freelancers in Lucena.",
     "amenities": [
       "Wi-Fi",
@@ -163,11 +163,11 @@
   },
   {
     "id": 10,
-    "name": "Rizal Collab Space",
+    "name": "CollabNest",
     "location": "Antipolo, Rizal",
     "price": 260,
-    "main_image": "/assets/space-10.jpg",
-    "images": ["/assets/space10_a.jpg"],
+    "main_image": "/assets/spaces/rizcol/main.jpg",
+    "images": ["/assets/spaces/rizcol/riz1.jpg", "/assets/spaces/rizcol/riz2.jpg"],
     "description": "A creative co-working space offering city views from the Antipolo hills.",
     "amenities": [
       "Wi-Fi",
@@ -181,11 +181,11 @@
   },
   {
     "id": 11,
-    "name": "Makati Hive",
+    "name": "The Hiveworks",
     "location": "Makati City, Metro Manila",
     "price": 480,
-    "main_image": "/assets/space-11.jpg",
-    "images": [],
+    "main_image": "/assets/spaces/makati/main.jpg",
+    "images": ["/assets/spaces/makati/mak1.jpg", "/assets/spaces/makati/mak2.jpg"],
     "description": "A modern co-working space tailored for startups and tech professionals.",
     "amenities": [
       "Fast Fiber Internet",
@@ -197,31 +197,14 @@
     "hours": "Open 24/7",
     "time_slots": ["Full Day", "Night Shift"]
   },
+  
   {
     "id": 12,
-    "name": "Tagaytay View Hub",
-    "location": "Tagaytay, Cavite",
-    "price": 300,
-    "main_image": "/assets/space-12.jpg",
-    "images": ["/assets/space12_a.jpg"],
-    "description": "A refreshing co-working space overlooking Taal Volcano, ideal for relaxed productivity.",
-    "amenities": [
-      "Scenic Views",
-      "Wi-Fi",
-      "Coffee & Pastries",
-      "Outdoor Balcony",
-      "Quiet Pods"
-    ],
-    "hours": "9:00 AM - 8:00 PM",
-    "time_slots": ["Morning", "Afternoon", "Evening"]
-  },
-  {
-    "id": 13,
-    "name": "Pasig Think Lab",
+    "name": "Thinksmiths",
     "location": "Pasig City, Metro Manila",
     "price": 350,
-    "main_image": "/assets/space-13.jpg",
-    "images": [],
+    "main_image": "/assets/spaces/think/main.jpg",
+    "images": ["/assets/spaces/think/t1.jpg", "/assets/spaces/think/t2.jpg"],
     "description": "A hub designed for entrepreneurs and students, with collaborative and quiet areas.",
     "amenities": [
       "Wi-Fi",
@@ -232,149 +215,4 @@
     ],
     "hours": "8:00 AM - 10:00 PM",
     "time_slots": ["Morning", "Afternoon", "Evening"]
-  },
-  {
-    "id": 14,
-    "name": "Las Piñas Study Café",
-    "location": "Las Piñas City, Metro Manila",
-    "price": 240,
-    "main_image": "/assets/space-14.jpg",
-    "images": [],
-    "description": "A quiet café environment built for late-night study sessions.",
-    "amenities": [
-      "Wi-Fi",
-      "Coffee & Tea",
-      "Charging Outlets",
-      "Quiet Zone",
-      "Air-conditioning"
-    ],
-    "hours": "10:00 AM - 12:00 AM",
-    "time_slots": ["Day Pass", "Night Pass"]
-  },
-  {
-    "id": 15,
-    "name": "Parañaque Productivity Hub",
-    "location": "Parañaque City, Metro Manila",
-    "price": 280,
-    "main_image": "/assets/space-15.jpg",
-    "images": [],
-    "description": "A flexible workspace with shared and private areas for professionals on the go.",
-    "amenities": [
-      "Wi-Fi",
-      "Private Rooms",
-      "Coffee Station",
-      "Free Parking",
-      "Air-conditioning"
-    ],
-    "hours": "8:00 AM - 9:00 PM",
-    "time_slots": ["Morning", "Afternoon", "Evening"]
-  },
-  {
-    "id": 16,
-    "name": "San Pedro Study Loft",
-    "location": "San Pedro, Laguna",
-    "price": 200,
-    "main_image": "/assets/space-16.jpg",
-    "images": [],
-    "description": "A simple, student-friendly loft ideal for group or solo study sessions.",
-    "amenities": [
-      "Wi-Fi",
-      "Coffee & Snacks",
-      "Group Pods",
-      "Quiet Corners",
-      "Air-conditioning"
-    ],
-    "hours": "9:00 AM - 10:00 PM",
-    "time_slots": ["Morning", "Afternoon", "Evening"]
-  },
-  {
-    "id": 17,
-    "name": "Binan Co-Study",
-    "location": "Biñan, Laguna",
-    "price": 220,
-    "main_image": "/assets/space-17.jpg",
-    "images": [],
-    "description": "A budget-friendly workspace popular among students from nearby universities.",
-    "amenities": [
-      "Wi-Fi",
-      "Free Coffee",
-      "Charging Outlets",
-      "Whiteboards",
-      "Air-conditioning"
-    ],
-    "hours": "8:00 AM - 8:00 PM",
-    "time_slots": ["Morning", "Afternoon", "Evening"]
-  },
-  {
-    "id": 18,
-    "name": "Lipa Study Hub",
-    "location": "Lipa City, Batangas",
-    "price": 260,
-    "main_image": "/assets/space-18.jpg",
-    "images": [],
-    "description": "A relaxing study hub for students in Batangas, with flexible seating options.",
-    "amenities": [
-      "Wi-Fi",
-      "Coffee & Tea",
-      "Outdoor Seating",
-      "Charging Outlets",
-      "Air-conditioning"
-    ],
-    "hours": "9:00 AM - 9:00 PM",
-    "time_slots": ["Morning", "Afternoon", "Evening"]
-  },
-  {
-    "id": 19,
-    "name": "Calamba Study Café",
-    "location": "Calamba, Laguna",
-    "price": 240,
-    "main_image": "/assets/space-19.jpg",
-    "images": [],
-    "description": "A convenient café and study space close to transport hubs in Calamba.",
-    "amenities": [
-      "Wi-Fi",
-      "Coffee Station",
-      "Quiet Pods",
-      "Air-conditioning",
-      "Snack Bar"
-    ],
-    "hours": "8:00 AM - 11:00 PM",
-    "time_slots": ["Morning", "Afternoon", "Evening"]
-  },
-  {
-    "id": 20,
-    "name": "Santa Rosa Co-Work",
-    "location": "Santa Rosa, Laguna",
-    "price": 280,
-    "main_image": "/assets/space-20.jpg",
-    "images": [],
-    "description": "A modern co-working space in the booming city of Santa Rosa.",
-    "amenities": [
-      "Wi-Fi",
-      "Private Rooms",
-      "Conference Pods",
-      "Coffee Bar",
-      "Air-conditioning"
-    ],
-    "hours": "8:00 AM - 9:00 PM",
-    "time_slots": ["Morning", "Afternoon", "Evening"]
-  },
-  {
-    "id": 21,
-    "name": "Quezon Work Lounge",
-    "location": "Lucban, Quezon Province",
-    "price": 200,
-    "main_image": "/assets/space-21.jpg",
-    "images": [],
-    "description": "A peaceful lounge near Mount Banahaw, perfect for focus sessions.",
-    "amenities": [
-      "Wi-Fi",
-      "Coffee & Tea",
-      "Outdoor Garden",
-      "Quiet Zone",
-      "Air-conditioning"
-    ],
-    "hours": "9:00 AM - 7:00 PM",
-    "time_slots": ["Morning", "Afternoon"]
-  }
-]
+  }]
