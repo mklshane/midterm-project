@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useAuth } from "../../contexts/AuthContext";
-import { Link, useLocation } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import LoginModal from "./LoginModal";
 
 const Navbar = () => {
@@ -12,6 +12,10 @@ const Navbar = () => {
   const profileDropdownRef = useRef(null);
   const lastScrollY = useRef(0);
   const location = useLocation();
+  const navigate = useNavigate();
+
+  // Check if we're on a space detail page
+  const isSpaceDetailPage = location.pathname.startsWith("/space/");
 
   const getLinkClasses = (linkName) => {
     const baseClasses = "px-3 py-1 rounded-full transition-colors";
@@ -118,63 +122,90 @@ const Navbar = () => {
       }`}
     >
       <div className="mx-auto px-10 flex justify-between items-center">
-        <Link
-          to="/"
-          className="flex-shrink-0 flex items-center space-x-2 text-xl font-bold text-green"
-          onClick={() => setActiveLink("home")}
-        >
-          <span>StudySpot PH</span>
-        </Link>
-
-        <div
-          className="flex-grow-0 flex gap-4 px-6 py-1.25 rounded-4xl border-2"
-          style={{ backgroundColor: "#ffffff" }}
-        >
-          {location.pathname === "/" ? (
-            <a
-              href="#home"
-              className={getLinkClasses("home")}
-              onClick={() => handleNavClick("home")}
-            >
-              Home
-            </a>
-          ) : (
-            <Link
-              to="/#home"
-              className={getLinkClasses("home")}
-              onClick={() => handleNavClick("home")}
-            >
-              Home
-            </Link>
-          )}
-
-          {location.pathname === "/" ? (
-            <a
-              href="#spaces"
-              className={getLinkClasses("spaces")}
-              onClick={() => handleNavClick("spaces")}
-            >
-              Spaces
-            </a>
-          ) : (
-            <Link
-              to="/#spaces"
-              className={getLinkClasses("spaces")}
-              onClick={() => handleNavClick("spaces")}
-            >
-              Spaces
-            </Link>
-          )}
-
-          <Link
-            to="/my-bookings"
-            className={getLinkClasses("my-bookings")}
-            onClick={() => setActiveLink("my-bookings")}
+        {/* Left side - Logo or Back button */}
+        {isSpaceDetailPage ? (
+          <button
+            onClick={() => navigate(-1)}
+            className="flex items-center text-black hover:text-gray-700 transition-colors"
           >
-            Bookings
+            <svg
+              className="w-5 h-5 mr-2"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M10 19l-7-7m0 0l7-7m-7 7h18"
+              />
+            </svg>
+            Back
+          </button>
+        ) : (
+          <Link
+            to="/"
+            className="flex-shrink-0 flex items-center space-x-2 text-xl font-bold text-green"
+            onClick={() => setActiveLink("home")}
+          >
+            <span>StudySpot PH</span>
           </Link>
-        </div>
+        )}
 
+        {/* Center - Navigation Links (hidden on space detail pages) */}
+        {!isSpaceDetailPage && (
+          <div
+            className="flex-grow-0 flex gap-4 px-6 py-1.25 rounded-4xl border-2"
+            style={{ backgroundColor: "#ffffff" }}
+          >
+            {location.pathname === "/" ? (
+              <a
+                href="#home"
+                className={getLinkClasses("home")}
+                onClick={() => handleNavClick("home")}
+              >
+                Home
+              </a>
+            ) : (
+              <Link
+                to="/#home"
+                className={getLinkClasses("home")}
+                onClick={() => handleNavClick("home")}
+              >
+                Home
+              </Link>
+            )}
+
+            {location.pathname === "/" ? (
+              <a
+                href="#spaces"
+                className={getLinkClasses("spaces")}
+                onClick={() => handleNavClick("spaces")}
+              >
+                Spaces
+              </a>
+            ) : (
+              <Link
+                to="/#spaces"
+                className={getLinkClasses("spaces")}
+                onClick={() => handleNavClick("spaces")}
+              >
+                Spaces
+              </Link>
+            )}
+
+            <Link
+              to="/my-bookings"
+              className={getLinkClasses("my-bookings")}
+              onClick={() => setActiveLink("my-bookings")}
+            >
+              Bookings
+            </Link>
+          </div>
+        )}
+
+        {/* Right side - Login/User Profile (always visible) */}
         {isLoggedIn ? (
           <div className="flex-shrink-0 flex items-center">
             <div
@@ -224,7 +255,7 @@ const Navbar = () => {
           </div>
         ) : (
           <button
-            className="flex-shrink-0 bg-white  px-5 text-black rounded-4xl text-[16px] transition-colors py-2 hover:bg-green border-2"
+            className="flex-shrink-0 bg-white px-5 text-black rounded-4xl text-[16px] transition-colors py-2 hover:bg-green border-2"
             onClick={() => setIsLoginOpen(true)}
           >
             Login
