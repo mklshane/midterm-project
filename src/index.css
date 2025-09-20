@@ -12,6 +12,8 @@ html {
   scroll-behavior: smooth;
 }
 
+
+
 .hero-overlay {
   position: relative;
 }
@@ -92,7 +94,7 @@ html {
 /* Toast Notification Styles */
 .toast-container {
   position: fixed;
-  top: 4rem;
+  top: 4.5rem;
   right: 1.5rem;
   display: flex;
   flex-direction: column;
@@ -104,7 +106,7 @@ html {
 
 .toast-notification {
   background-color: white;
-  border-radius: 8px;
+  border-radius: 25px;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
   overflow: hidden;
   animation: slideIn 0.3s ease-out, fadeOut 0.5s ease-in 4.5s forwards;

@@ -10,6 +10,7 @@ const LoginModal = ({ isOpen, onClose }) => {
   const [name, setName] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { login } = useAuth();
+  const { addToast} = useToast();
 
   useEffect(() => {
     if (isOpen) {
@@ -28,13 +29,13 @@ const LoginModal = ({ isOpen, onClose }) => {
 
     setIsSubmitting(true);
 
-    // Simulate a brief network request for better UX
     try {
       await new Promise((resolve) => setTimeout(resolve, 800));
       login(name.trim());
       setName("");
       onClose();
     } catch (error) {
+      console.log(error)
       addToast("Login failed. Please try again.", "error");
     } finally {
       setIsSubmitting(false);

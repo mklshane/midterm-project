@@ -27,11 +27,9 @@ const Navbar = () => {
     }`;
   };
 
-  // Combined scroll handlers
   const handleNavScroll = useCallback(() => {
     const currentScrollY = window.scrollY;
 
-    // Navbar visibility
     if (currentScrollY <= 0) {
       setIsVisible(true);
     } else if (currentScrollY < lastScrollY.current) {
@@ -42,7 +40,6 @@ const Navbar = () => {
 
     lastScrollY.current = currentScrollY;
 
-    // Section detection (only on homepage)
     if (location.pathname === "/") {
       const homeSection = document.getElementById("home");
       const spacesSection = document.getElementById("spaces");
@@ -62,7 +59,6 @@ const Navbar = () => {
     }
   }, [location.pathname]);
 
-  // Close dropdown on outside click
   const handleClickOutside = useCallback((event) => {
     if (
       profileDropdownRef.current &&
@@ -72,9 +68,7 @@ const Navbar = () => {
     }
   }, []);
 
-  // Main useEffect for all event listeners
   useEffect(() => {
-    // Set active link based on route
     if (location.pathname === "/my-bookings") {
       setActiveLink("my-bookings");
     } else if (location.hash === "#spaces") {
@@ -87,7 +81,6 @@ const Navbar = () => {
     document.addEventListener("mousedown", handleClickOutside);
     handleNavScroll();
 
-    // Cleanup
     return () => {
       window.removeEventListener("scroll", handleNavScroll);
       document.removeEventListener("mousedown", handleClickOutside);
@@ -205,9 +198,33 @@ const Navbar = () => {
           </div>
         )}
 
-        {/* Right side - Login/User Profile (always visible) */}
-        {isLoggedIn ? (
-          <div className="flex-shrink-0 flex items-center">
+        {/* Right side - Login/User Profile and Bookings button (only on space detail pages) */}
+        <div className="flex-shrink-0 flex items-center gap-4">
+          {/* Bookings Button - Only visible on space detail pages */}
+          {isSpaceDetailPage && (
+            <Link
+              to="/my-bookings"
+              className="bg-green px-5 text-black rounded-4xl text-[16px] transition-colors py-2 hover:bg-green border-2  flex items-center"
+            >
+              <svg
+                className="w-4 h-4 mr-2"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                />
+              </svg>
+              Bookings
+            </Link>
+          )}
+
+          {isLoggedIn ? (
             <div
               className="relative bg-white py-2 px-4 border-2 rounded-4xl"
               ref={profileDropdownRef}
@@ -252,15 +269,15 @@ const Navbar = () => {
                 </div>
               )}
             </div>
-          </div>
-        ) : (
-          <button
-            className="flex-shrink-0 bg-white px-5 text-black rounded-4xl text-[16px] transition-colors py-2 hover:bg-green border-2"
-            onClick={() => setIsLoginOpen(true)}
-          >
-            Login
-          </button>
-        )}
+          ) : (
+            <button
+              className="bg-white px-5 text-black rounded-4xl text-[16px] transition-colors py-2 hover:bg-green border-2"
+              onClick={() => setIsLoginOpen(true)}
+            >
+              Login
+            </button>
+          )}
+        </div>
       </div>
 
       <LoginModal isOpen={isLoginOpen} onClose={() => setIsLoginOpen(false)} />
