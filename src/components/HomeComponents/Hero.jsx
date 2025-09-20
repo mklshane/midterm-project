@@ -20,7 +20,7 @@ const Hero = ({ searchValue, setSearchValue }) => {
 
   return (
     <div
-      className="w-[98%] mx-auto h-[98%] relative overflow-hidden rounded-4xl"
+      className="w-[98%] mx-auto h-[97%] relative overflow-hidden rounded-4xl"
       id="home"
     >
       <div
