@@ -5,53 +5,32 @@ import Spaces from "@/components/HomeComponents/Spaces";
 import spacesData from "../data/spaces.json";
 
 const Homepage = () => {
-  const [searchValue, setSearchValue] = useState("");
   const [spaces, setSpaces] = useState([]);
 
   useEffect(() => {
     setSpaces(spacesData);
-    console.log(spacesData);
   }, []);
 
-  const filteredSpaces = () => {
-    if (!searchValue.trim()) {
-      return spaces;
-    }
-    const searchTerm = searchValue.toLowerCase().trim();
-
-    return spaces.filter((space) => {
-      const { name, location } = space;
-
-      return (
-        name?.toLowerCase().includes(searchTerm) ||
-        location?.toLowerCase().includes(searchTerm)
-      );
-    });
-  };
-
   return (
-    <div className="w-full bg-[#f5f5dc] relative">
-      <div
-        className="absolute inset-0 z-0"
-        style={{
-          backgroundImage: `
-        radial-gradient(circle at 20% 80%, rgba(120,119,198,0.3) 0%, transparent 50%),
-        radial-gradient(circle at 80% 20%, rgba(255,255,255,0.5) 0%, transparent 50%),
-        radial-gradient(circle at 40% 40%, rgba(120,119,198,0.1) 0%, transparent 50%)`,
-        }}
-      />
+    <div
+      className="w-full relative"
+      style={{
+        background: `
+      radial-gradient(circle at 50% 30%, #ffffff 0%, #f7f7f7 60%, #f2f2f2 100%)
+    `,
+      }}
+    >
       <div className="w-full h-[100dvh] flex flex-col">
         <Navbar />
         <div className="flex-1 flex justify-center items-center">
-          <Hero searchValue={searchValue} setSearchValue={setSearchValue} />
+          <Hero />
         </div>
       </div>
       <div className="w-full py-10 ">
-        <Spaces filteredSpaces={filteredSpaces()} />
+        <Spaces filteredSpaces={spaces} />
       </div>
     </div>
   );
 };
 
 export default Homepage;
-
