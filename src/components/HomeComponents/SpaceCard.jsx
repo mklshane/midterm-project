@@ -36,7 +36,6 @@ const SpaceCard = ({ space }) => {
         <div className="flex justify-between items-center">
           <p className="text-lg text-black/90 font-bold group-hover:text-black transition-colors">
             ₱{price}
-            <span className="text-sm text-gray-400 font-light"> /hour</span>
           </p>
 
           <Link to={`/space/${id}`} state={{ space }}>

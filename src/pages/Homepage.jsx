@@ -3,6 +3,7 @@ import Navbar from "../components/HomeComponents/Navbar";
 import Hero from "@/components/HomeComponents/Hero";
 import Spaces from "@/components/HomeComponents/Spaces";
 import spacesData from "../data/spaces.json";
+import Footer from "@/components/HomeComponents/Footer";
 
 const Homepage = () => {
   const [spaces, setSpaces] = useState([]);
@@ -29,6 +30,7 @@ const Homepage = () => {
       <div className="w-full py-10 ">
         <Spaces filteredSpaces={spaces} />
       </div>
+      <Footer />
     </div>
   );
 };
