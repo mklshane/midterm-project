@@ -15,18 +15,7 @@ const Footer = () => {
           Find your perfect study environment in the Philippines
         </p>
 
-        {/* Links */}
-        <div className="flex space-x-6 mb-6">
-          <a href="#" className="text-gray-400 hover:text-white text-sm">
-            About
-          </a>
-          <a href="#" className="text-gray-400 hover:text-white text-sm">
-            Contact
-          </a>
-          <a href="#" className="text-gray-400 hover:text-white text-sm">
-            Privacy
-          </a>
-        </div>
+        
 
         {/* Copyright */}
         <div className="text-gray-500 text-xs">

@@ -204,7 +204,7 @@ const Navbar = () => {
           {isSpaceDetailPage && (
             <Link
               to="/my-bookings"
-              className="bg-green px-5 text-black rounded-4xl text-[16px] transition-colors py-2 hover:bg-green border-2  flex items-center"
+              className="bg-white px-5 text-black rounded-4xl text-[16px] transition-colors py-2 hover:bg-green border border-black  flex items-center"
             >
               <svg
                 className="w-4 h-4 mr-2"
@@ -271,7 +271,7 @@ const Navbar = () => {
             </div>
           ) : (
             <button
-              className="bg-white px-5 text-black rounded-4xl text-[16px] transition-colors py-2 hover:bg-green border-2"
+              className="bg-green px-5 text-black rounded-4xl text-[16px] transition-colors py-2 hover:bg-black hover:text-green hover:border-green border-2"
               onClick={() => setIsLoginOpen(true)}
             >
               Login

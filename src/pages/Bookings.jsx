@@ -13,7 +13,6 @@ const Bookings = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [sortBy, setSortBy] = useState("closest");
 
-  // Get today's date in YYYY-MM-DD format
   const today = new Date().toISOString().split("T")[0];
 
   // Separate bookings into upcoming (including today) and past
@@ -78,7 +77,6 @@ const Bookings = () => {
     return groups;
   }, {});
 
-  // Calculate total bookings count
   const totalBookings = sortedBookings.length;
 
   const handleCancelClick = (booking) => {
@@ -165,15 +163,33 @@ const Bookings = () => {
                 >
                   Sort by
                 </label>
-                <select
-                  id="sort-by"
-                  value={sortBy}
-                  onChange={(e) => setSortBy(e.target.value)}
-                  className="p-3 border border-gray-300 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                >
-                  <option value="closest">Closest Date</option>
-                  <option value="newest">Newest First</option>
-                </select>
+                <div className="relative">
+                  <select
+                    id="sort-by"
+                    value={sortBy}
+                    onChange={(e) => setSortBy(e.target.value)}
+                    className="w-full p-3 border border-gray-300 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none pr-10"
+                  >
+                    <option value="closest">Closest Date</option>
+                    <option value="newest">Newest First</option>
+                  </select>
+                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-gray-700">
+                    <svg
+                      className="h-4 w-4"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M19 9l-7 7-7-7"
+                      />
+                    </svg>
+                  </div>
+                </div>
               </div>
             )}
 

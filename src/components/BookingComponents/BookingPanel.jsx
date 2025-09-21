@@ -21,7 +21,6 @@ const BookingPanel = ({ space, bookingDetails, onBookingChange }) => {
   const handleBookNow = () => {
     if (!bookingDetails.date || !bookingDetails.timeSlot) return;
 
-
     const newBooking = {
       id: Date.now().toString(),
       spaceId: spaceId,
@@ -79,32 +78,48 @@ const BookingPanel = ({ space, bookingDetails, onBookingChange }) => {
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Time Slot
               </label>
-              <select
-                className="w-full p-3 border border-gray-300 rounded-xl text-sm focus:ring-2 focus:ring-green focus:border-transparent"
-                value={bookingDetails.timeSlot}
-                onChange={(e) =>
-                  handleBookingChange("timeSlot", e.target.value)
-                }
-              >
-                <option value="">Select a time slot</option>
-                {time_slots.map((slot, index) => {
-                  const isBooked =
-                    bookingDetails.date &&
-                    isTimeSlotBooked(bookingDetails.date, slot);
-                  return (
-                    <option
-                      key={index}
-                      value={slot}
-                      disabled={isBooked}
-                      className={isBooked ? "text-gray-400 bg-gray-100" : ""}
-                    >
-                      {slot} {isBooked && "(Booked)"}
-                    </option>
-                  );
-                })}
-              </select>
-
-             
+              <div className="relative">
+                <select
+                  className="w-full p-3 border border-gray-300 rounded-xl text-sm focus:ring-2 focus:ring-green focus:border-transparent appearance-none pr-10"
+                  value={bookingDetails.timeSlot}
+                  onChange={(e) =>
+                    handleBookingChange("timeSlot", e.target.value)
+                  }
+                >
+                  <option value="">Select a time slot</option>
+                  {time_slots.map((slot, index) => {
+                    const isBooked =
+                      bookingDetails.date &&
+                      isTimeSlotBooked(bookingDetails.date, slot);
+                    return (
+                      <option
+                        key={index}
+                        value={slot}
+                        disabled={isBooked}
+                        className={isBooked ? "text-gray-400 bg-gray-100" : ""}
+                      >
+                        {slot} {isBooked && "(Booked)"}
+                      </option>
+                    );
+                  })}
+                </select>
+                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-gray-700">
+                  <svg
+                    className="h-4 w-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </div>
+              </div>
             </div>
           )}
 
@@ -119,7 +134,7 @@ const BookingPanel = ({ space, bookingDetails, onBookingChange }) => {
           {/* Book Now Button */}
           <button
             onClick={handleBookNow}
-            className="w-full bg-black hover:bg-gray-800 text-white py-4 px-6 rounded-xl font-semibold transition-all duration-300 hover:scale-105 disabled:bg-gray-400 disabled:cursor-not-allowed disabled:transform-none"
+            className="w-full bg-black hover:bg-gray-800 text-white py-3 px-6 rounded-4xl font-semibold transition-all duration-300 hover:scale-103 disabled:bg-gray-400 disabled:cursor-not-allowed disabled:transform-none"
             disabled={
               !bookingDetails.date ||
               !bookingDetails.timeSlot ||
