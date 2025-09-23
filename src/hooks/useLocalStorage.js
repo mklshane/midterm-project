@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export function usePersistedState(key, initialValue) {
+export function useLocalStorage(key, initialValue) {
   const [state, setState] = useState(() => {
     const stored = localStorage.getItem(key);
     return stored ? JSON.parse(stored) : initialValue;

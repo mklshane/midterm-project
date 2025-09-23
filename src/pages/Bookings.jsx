@@ -15,7 +15,7 @@ const Bookings = () => {
 
   const today = new Date().toISOString().split("T")[0];
 
-  // Separate bookings into upcoming (including today) and past
+  // Separate bookings into upcoming and past
   const separateBookings = (bookingsList) => {
     const upcoming = [];
     const past = [];
@@ -43,7 +43,6 @@ const Bookings = () => {
   // Sort bookings based on selected sort option (only for upcoming bookings)
   const sortedUpcoming = [...filteredUpcoming].sort((a, b) => {
     if (sortBy === "closest") {
-      // Sort by closest date (including today and future dates)
       const dateA = new Date(a.date);
       const dateB = new Date(b.date);
       const todayDate = new Date(today);
@@ -54,7 +53,7 @@ const Bookings = () => {
 
       return diffA - diffB;
     } else {
-      // Sort by newest date (default)
+      // Sort by newest date 
       return new Date(b.date) - new Date(a.date);
     }
   });
@@ -97,7 +96,6 @@ const Bookings = () => {
     setIsModalOpen(false);
   };
 
-  // Update sort method when filter date changes
   useEffect(() => {
     if (filterDate) {
       setSortBy("newest");

@@ -1,11 +1,11 @@
 import { createContext, useContext } from "react";
-import { usePersistedState } from "../hooks/usePersistedState";
+import { useLocalStorage } from "../hooks/useLocalStorage";
 import { useToast } from "./ToastContext";
 
 const BookingsContext = createContext();
 
 export function BookingsProvider({ children }) {
-  const [bookings, setBookings] = usePersistedState("bookings", []);
+  const [bookings, setBookings] = useLocalStorage("bookings", []);
   const { addToast } = useToast();
 
   const addBooking = (newBooking) => {
@@ -15,7 +15,7 @@ export function BookingsProvider({ children }) {
 
   const removeBooking = (id) => {
     setBookings(bookings.filter((b) => b.id !== id));
-    addToast("Booking removed", "info");
+    addToast("Booking cancelled", "info");
   };
 
   const clearBookings = () => {

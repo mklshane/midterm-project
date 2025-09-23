@@ -6,8 +6,6 @@ import BookingPanel from "@/components/BookingComponents/BookingPanel";
 const SpaceDetail = () => {
   const location = useLocation();
   const space = location.state?.space;
-
-  // Carousel state
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [allImages, setAllImages] = useState([]);
 
@@ -32,7 +30,7 @@ const SpaceDetail = () => {
     }
   }, [space]);
 
-  // Auto-rotate images every 5 seconds
+  // Auto-rotate images every 7 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImageIndex((prevIndex) =>
@@ -90,9 +88,8 @@ const SpaceDetail = () => {
           {/* Left Column - Content */}
           <div className="lg:col-span-2">
             <div className="bg-white rounded-2xl shadow-xl p-6 mb-6">
-              {/* Enhanced Image Carousel */}
+              {/* Image Carousel */}
               <div className="relative h-96 overflow-hidden rounded-xl mb-8 group">
-                {/* Main Image with Zoom Effect */}
                 <div className="relative w-full h-full overflow-hidden">
                   <img
                     src={allImages[currentImageIndex]}
@@ -103,7 +100,7 @@ const SpaceDetail = () => {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </div>
 
-                {/* Navigation Arrows - Modern Design */}
+                {/* Navigation Arrows */}
                 {allImages.length > 1 && (
                   <>
                     <button
