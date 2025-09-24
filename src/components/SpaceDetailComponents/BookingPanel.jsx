@@ -65,8 +65,16 @@ const BookingPanel = ({ space, bookingDetails, onBookingChange }) => {
               value={bookingDetails.date}
               onChange={(e) => {
                 handleBookingChange("date", e.target.value);
-                // Reset time slot when date changes to avoid conflicts
-                handleBookingChange("timeSlot", "");
+                // Only reset time slot if the newly selected date makes the current time slot invalid
+                if (bookingDetails.timeSlot && bookingDetails.date) {
+                  const isStillValid = !isTimeSlotBooked(
+                    e.target.value,
+                    bookingDetails.timeSlot
+                  );
+                  if (!isStillValid) {
+                    handleBookingChange("timeSlot", "");
+                  }
+                }
               }}
               min={new Date().toISOString().split("T")[0]}
             />

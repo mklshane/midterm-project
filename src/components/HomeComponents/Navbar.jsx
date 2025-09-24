@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useAuth } from "../../contexts/AuthContext";
-import { Link, useLocation, useNavigate } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router-dom"; // Use react-router-dom
 import LoginModal from "./LoginModal";
 
 const Navbar = () => {
@@ -14,14 +14,12 @@ const Navbar = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  // Check if we're on a space detail page
   const isSpaceDetailPage = location.pathname.startsWith("/space/");
 
   const getLinkClasses = (linkName) => {
     const baseClasses = "px-3 py-1 rounded-full transition-colors";
     const activeClasses = "bg-gray-300 bg-opacity-50 text-black font-medium";
     const inactiveClasses = "text-black hover:bg-gray-200";
-
     return `${baseClasses} ${
       activeLink === linkName ? activeClasses : inactiveClasses
     }`;
@@ -90,12 +88,9 @@ const Navbar = () => {
   const handleNavClick = (link) => {
     setActiveLink(link);
 
-    if ((link === "home" || link === "spaces") && location.pathname !== "/") {
-      window.location.href = `/#${link}`;
-      return;
-    }
-
     if (link === "home" || link === "spaces") {
+      // Use navigate instead of window.location.href
+      navigate(`/#${link}`);
       setTimeout(() => {
         const element = document.getElementById(link);
         if (element) {
@@ -115,7 +110,6 @@ const Navbar = () => {
       }`}
     >
       <div className="mx-auto px-10 flex justify-between items-center">
-        {/* Left side - Logo or Back button */}
         {isSpaceDetailPage ? (
           <button
             onClick={() => navigate(-1)}
@@ -146,48 +140,22 @@ const Navbar = () => {
           </Link>
         )}
 
-        {/* Center - Navigation Links (hidden on space detail pages) */}
         {!isSpaceDetailPage && (
-          <div
-            className="flex-grow-0 flex gap-4 px-6 py-1.25 rounded-4xl border-2"
-            style={{ backgroundColor: "#ffffff" }}
-          >
-            {location.pathname === "/" ? (
-              <a
-                href="#home"
-                className={getLinkClasses("home")}
-                onClick={() => handleNavClick("home")}
-              >
-                Home
-              </a>
-            ) : (
-              <Link
-                to="/#home"
-                className={getLinkClasses("home")}
-                onClick={() => handleNavClick("home")}
-              >
-                Home
-              </Link>
-            )}
-
-            {location.pathname === "/" ? (
-              <a
-                href="#spaces"
-                className={getLinkClasses("spaces")}
-                onClick={() => handleNavClick("spaces")}
-              >
-                Spaces
-              </a>
-            ) : (
-              <Link
-                to="/#spaces"
-                className={getLinkClasses("spaces")}
-                onClick={() => handleNavClick("spaces")}
-              >
-                Spaces
-              </Link>
-            )}
-
+          <div className="flex-grow-0 flex gap-4 px-6 py-1.25 rounded-4xl border-2 bg-white">
+            <Link
+              to="/#home"
+              className={getLinkClasses("home")}
+              onClick={() => handleNavClick("home")}
+            >
+              Home
+            </Link>
+            <Link
+              to="/#spaces"
+              className={getLinkClasses("spaces")}
+              onClick={() => handleNavClick("spaces")}
+            >
+              Spaces
+            </Link>
             <Link
               to="/my-bookings"
               className={getLinkClasses("my-bookings")}
@@ -198,13 +166,11 @@ const Navbar = () => {
           </div>
         )}
 
-        {/* Right side - Login/User Profile and Bookings button (only on space detail pages) */}
         <div className="flex-shrink-0 flex items-center gap-4">
-          {/* Bookings Button - Only visible on space detail pages */}
           {isSpaceDetailPage && (
             <Link
               to="/my-bookings"
-              className="bg-white px-5 text-black rounded-4xl text-[16px] transition-colors py-2 hover:bg-green border border-black  flex items-center"
+              className="bg-white px-5 text-black rounded-4xl text-[16px] transition-colors py-2 hover:bg-green border border-black flex items-center"
             >
               <svg
                 className="w-4 h-4 mr-2"
@@ -236,7 +202,7 @@ const Navbar = () => {
                 }}
                 className="flex items-center space-x-2 text-black hover:text-[#b0ce29] transition-colors"
               >
-                <div className="w-6 h-6 rounded-full bg-[#faffe4] flex items-center justify-center text-[#96b702] font-medium ">
+                <div className="w-6 h-6 rounded-full bg-[#faffe4] flex items-center justify-center text-[#96b702] font-medium">
                   {userName.charAt(0).toUpperCase()}
                 </div>
                 <span>Hi, {userName}</span>
@@ -271,7 +237,7 @@ const Navbar = () => {
             </div>
           ) : (
             <button
-              className="bg-green px-5 text-black rounded-4xl text-[16px] transition-colors py-2 hover:bg-black hover:text-green hover:border-green border-2"
+              className="bg-green px-5 text-black rounded-4xl text-[16px] transition-colors py-2 hover:bg-green/70 hover:font-bold hover:border-green border-2"
               onClick={() => setIsLoginOpen(true)}
             >
               Login

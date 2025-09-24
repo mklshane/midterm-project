@@ -1,12 +1,12 @@
 import React, { createContext, useContext, useState } from "react";
-import { usePersistedState } from "../hooks/usePersistedState";
+import { useLocalStorage } from "../hooks/useLocalStorage";
 import { useToast } from "./ToastContext";
 
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
-  const [isLoggedIn, setIsLoggedIn] = usePersistedState("isLoggedIn", false);
-  const [userName, setUserName] = usePersistedState("userName", "");
+  const [isLoggedIn, setIsLoggedIn] = useLocalStorage("isLoggedIn", false);
+  const [userName, setUserName] = useLocalStorage("userName", "");
   const { addToast } = useToast();
 
   const login = (name) => {
