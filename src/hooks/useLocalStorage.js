@@ -6,6 +6,7 @@ export function useLocalStorage(key, initialValue) {
     return stored ? JSON.parse(stored) : initialValue;
   });
 
+  // update localstorage whenever the state or key changes
   useEffect(() => {
     localStorage.setItem(key, JSON.stringify(state));
   }, [key, state]);

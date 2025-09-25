@@ -8,24 +8,21 @@ export function BookingsProvider({ children }) {
   const [bookings, setBookings] = useLocalStorage("bookings", []);
   const { addToast } = useToast();
 
+  // adds a new booking to the list
   const addBooking = (newBooking) => {
     setBookings([...bookings, newBooking]);
     addToast("Booking added!", "success");
   };
 
+  // remove a booking
   const removeBooking = (id) => {
     setBookings(bookings.filter((b) => b.id !== id));
     addToast("Booking cancelled", "info");
   };
 
-  const clearBookings = () => {
-    setBookings([]);
-    addToast("All bookings cleared", "error");
-  };
-
   return (
     <BookingsContext.Provider
-      value={{ bookings, addBooking, removeBooking, clearBookings }}
+      value={{ bookings, addBooking, removeBooking }}
     >
       {children}
     </BookingsContext.Provider>

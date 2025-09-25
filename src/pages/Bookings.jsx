@@ -12,16 +12,20 @@ import animations from "@/utils/animation";
 const { pageVariants, pageTransition } = animations.page;
 
 const Bookings = () => {
+  // get authentication and booking context values
   const { isLoggedIn } = useAuth();
   const { bookings, removeBooking } = useBookings();
+
+  // ui and state management
   const [filterDate, setFilterDate] = useState("");
   const [bookingToCancel, setBookingToCancel] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [sortBy, setSortBy] = useState("closest");
 
+  // get today's date in yyyy-mm-dd format
   const today = new Date().toISOString().split("T")[0];
 
-  // Separate bookings into upcoming and past
+  // separates bookings into upcoming and past
   const separateBookings = (bookingsList) => {
     const upcoming = [];
     const past = [];
@@ -37,42 +41,40 @@ const Bookings = () => {
     return { upcoming, past };
   };
 
-  // Filter bookings by date if a filter is set
+  // filter bookings by selected date (if any)
   const filteredBookings = filterDate
     ? bookings.filter((booking) => booking.date === filterDate)
     : bookings;
 
-  // Separate filtered bookings into upcoming and past
+  // split filtered bookings into upcoming and past
   const { upcoming: filteredUpcoming, past: filteredPast } =
     separateBookings(filteredBookings);
 
-  // Sort bookings based on selected sort option (only for upcoming bookings)
+  // sort upcoming bookings by "closest" or "newest"
   const sortedUpcoming = [...filteredUpcoming].sort((a, b) => {
     if (sortBy === "closest") {
       const dateA = new Date(a.date);
       const dateB = new Date(b.date);
       const todayDate = new Date(today);
 
-      // Calculate days difference from today
       const diffA = Math.abs(dateA - todayDate);
       const diffB = Math.abs(dateB - todayDate);
 
       return diffA - diffB;
     } else {
-      // Sort by newest date
       return new Date(b.date) - new Date(a.date);
     }
   });
 
-  // Sort past bookings by most recent first
+  // sort past bookings by newest first
   const sortedPast = [...filteredPast].sort(
     (a, b) => new Date(b.date) - new Date(a.date)
   );
 
-  // Combine sorted upcoming and past bookings
+  // merge sorted bookings
   const sortedBookings = [...sortedUpcoming, ...sortedPast];
 
-  // Group bookings by date
+  // group bookings by date
   const groupedBookings = sortedBookings.reduce((groups, booking) => {
     const date = booking.date;
     if (!groups[date]) {
@@ -82,13 +84,16 @@ const Bookings = () => {
     return groups;
   }, {});
 
+  // count total bookings
   const totalBookings = sortedBookings.length;
 
+  // handle booking cancellation click
   const handleCancelClick = (booking) => {
     setBookingToCancel(booking);
     setIsModalOpen(true);
   };
 
+  // confirm cancellation and remove booking
   const handleCancelConfirm = () => {
     if (bookingToCancel) {
       removeBooking(bookingToCancel.id);
@@ -97,11 +102,13 @@ const Bookings = () => {
     setIsModalOpen(false);
   };
 
+  // close cancel modal without removing booking
   const handleCancelCancel = () => {
     setBookingToCancel(null);
     setIsModalOpen(false);
   };
 
+  // change sorting automatically based on filter state
   useEffect(() => {
     if (filterDate) {
       setSortBy("newest");
@@ -110,6 +117,7 @@ const Bookings = () => {
     }
   }, [filterDate]);
 
+  // if user is not logged in, show login required component
   if (!isLoggedIn) {
     return <LoginRequired />;
   }
@@ -125,6 +133,7 @@ const Bookings = () => {
     >
       <Navbar />
       <div className="max-w-6xl mx-auto px-4 py-25">
+        {/* header with filter and sort controls */}
         <BookingsHeader
           totalBookings={totalBookings}
           filterDate={filterDate}
@@ -133,6 +142,7 @@ const Bookings = () => {
           onFilterDateChange={setFilterDate}
         />
 
+        {/* bookings list */}
         <AnimatePresence mode="wait">
           <BookingsContent
             key={`${filterDate}-${sortBy}`}
@@ -144,6 +154,7 @@ const Bookings = () => {
           />
         </AnimatePresence>
 
+        {/* cancel booking confirmation modal */}
         <AnimatePresence>
           {isModalOpen && (
             <ConfirmModal
