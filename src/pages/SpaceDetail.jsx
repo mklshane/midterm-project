@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import Navbar from "@/components/HomeComponents/Navbar";
 import BookingPanel from "@/components/SpaceDetailComponents/BookingPanel";
 import ImageCarousel from "@/components/SpaceDetailComponents/ImageCarousel";
@@ -12,7 +12,7 @@ const { containerVariants } = animations.containers;
 
 const SpaceDetail = () => {
   const location = useLocation();
-  const space = location.state?.space;
+  const space = location.state?.space; 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [allImages, setAllImages] = useState([]);
   const [bookingDetails, setBookingDetails] = useState({
@@ -20,16 +20,20 @@ const SpaceDetail = () => {
     timeSlot: "",
   });
 
+  // scroll to top when component mounts
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
+  // prepare images & default booking details when space data changes
   useEffect(() => {
     if (space) {
       const images = [space.main_image, ...(space.images || [])].filter(
         Boolean
       );
       setAllImages(images);
+
+      // pre-select first available time slot if exists
       if (space.time_slots && space.time_slots.length > 0) {
         setBookingDetails((prev) => ({
           ...prev,
@@ -39,8 +43,10 @@ const SpaceDetail = () => {
     }
   }, [space]);
 
-  // auto-rotate images every 7 seconds
+  // auto-rotate carousel images every 7 seconds
   useEffect(() => {
+    if (allImages.length === 0) return;
+
     const interval = setInterval(() => {
       setCurrentImageIndex((prevIndex) =>
         prevIndex === allImages.length - 1 ? 0 : prevIndex + 1
@@ -50,6 +56,7 @@ const SpaceDetail = () => {
     return () => clearInterval(interval);
   }, [allImages.length]);
 
+  // image navigation helpers
   const nextImage = () => {
     setCurrentImageIndex((prevIndex) =>
       prevIndex === allImages.length - 1 ? 0 : prevIndex + 1
@@ -66,6 +73,7 @@ const SpaceDetail = () => {
     setCurrentImageIndex(index);
   };
 
+  // handle booking form field changes
   const handleBookingChange = (field, value) => {
     setBookingDetails((prev) => ({
       ...prev,
@@ -73,6 +81,7 @@ const SpaceDetail = () => {
     }));
   };
 
+  // fallback loader if space is not yet available
   if (!space) {
     return (
       <motion.div
@@ -81,6 +90,7 @@ const SpaceDetail = () => {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
       >
+        {/* spinning loader */}
         <motion.div
           animate={{
             rotate: 360,
@@ -96,6 +106,7 @@ const SpaceDetail = () => {
     );
   }
 
+  // destructure space data 
   const {
     name,
     location: spaceLocation,
@@ -121,7 +132,7 @@ const SpaceDetail = () => {
         animate="visible"
       >
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Left Column - Content */}
+          {/* Left Column - Images & Space Info */}
           <div className="lg:col-span-2">
             <motion.div
               className="bg-white rounded-2xl shadow-xl p-6 mb-6"
@@ -129,6 +140,7 @@ const SpaceDetail = () => {
               whileHover={{ y: -2 }}
               transition={{ type: "spring", stiffness: 300 }}
             >
+              {/* carousel with image navigation */}
               <ImageCarousel
                 allImages={allImages}
                 currentImageIndex={currentImageIndex}
@@ -136,11 +148,15 @@ const SpaceDetail = () => {
                 prevImage={prevImage}
                 goToImage={goToImage}
               />
+
+              {/* space name, location, price */}
               <SpaceInfo
                 name={name}
                 spaceLocation={spaceLocation}
                 price={price}
               />
+
+              {/* details such as description, amenities, hours, and slots */}
               <SpaceDetails
                 description={description}
                 amenities={amenities}

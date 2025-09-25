@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useAuth } from "../../contexts/AuthContext";
-import { Link, useLocation, useNavigate } from "react-router-dom"; // Use react-router-dom
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import LoginModal from "./LoginModal";
 
 const Navbar = () => {
@@ -14,7 +14,9 @@ const Navbar = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
+  // check if the current route is a space detail page or bookings page
   const isSpaceDetailPage = location.pathname.startsWith("/space/");
+  const isBookingsPage = location.pathname === "/my-bookings";
 
   const getLinkClasses = (linkName) => {
     const baseClasses = "px-3 py-1 rounded-full transition-colors";
@@ -25,9 +27,11 @@ const Navbar = () => {
     }`;
   };
 
+  // show/hide navbar based on scroll direction and track active section on homepage
   const handleNavScroll = useCallback(() => {
     const currentScrollY = window.scrollY;
 
+    // show navbar when at top or scrolling upward
     if (currentScrollY <= 0) {
       setIsVisible(true);
     } else if (currentScrollY < lastScrollY.current) {
@@ -38,6 +42,7 @@ const Navbar = () => {
 
     lastScrollY.current = currentScrollY;
 
+    // update active link depending on visible section (homepage only)
     if (location.pathname === "/") {
       const homeSection = document.getElementById("home");
       const spacesSection = document.getElementById("spaces");
@@ -57,6 +62,7 @@ const Navbar = () => {
     }
   }, [location.pathname]);
 
+  // close profile dropdown if clicked outside
   const handleClickOutside = useCallback((event) => {
     if (
       profileDropdownRef.current &&
@@ -66,6 +72,7 @@ const Navbar = () => {
     }
   }, []);
 
+  // initialize active link, reset dropdown on login, and attach event listeners
   useEffect(() => {
     if (location.pathname === "/my-bookings") {
       setActiveLink("my-bookings");
@@ -74,6 +81,7 @@ const Navbar = () => {
     } else if (location.pathname === "/" && !location.hash) {
       setActiveLink("home");
     }
+    setIsProfileDropdownOpen(false);
 
     window.addEventListener("scroll", handleNavScroll);
     document.addEventListener("mousedown", handleClickOutside);
@@ -83,13 +91,13 @@ const Navbar = () => {
       window.removeEventListener("scroll", handleNavScroll);
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [location, handleNavScroll, handleClickOutside]);
+  }, [location, handleNavScroll, handleClickOutside, isLoggedIn]);
 
+  // handle navigation click and smooth scroll for in-page links
   const handleNavClick = (link) => {
     setActiveLink(link);
 
     if (link === "home" || link === "spaces") {
-      // Use navigate instead of window.location.href
       navigate(`/#${link}`);
       setTimeout(() => {
         const element = document.getElementById(link);
@@ -109,7 +117,8 @@ const Navbar = () => {
         isVisible ? "translate-y-0" : "-translate-y-full"
       }`}
     >
-      <div className="mx-auto px-10 flex justify-between items-center">
+      <div className="mx-auto px-10 flex justify-between items-center relative">
+        {/* show back button on space detail page, otherwise show logo */}
         {isSpaceDetailPage ? (
           <button
             onClick={() => navigate(-1)}
@@ -133,15 +142,18 @@ const Navbar = () => {
         ) : (
           <Link
             to="/"
-            className="flex-shrink-0 flex items-center space-x-2 text-xl font-bold text-green"
+            className={`flex-shrink-0 flex items-center space-x-2 text-xl font-bold ${
+              isBookingsPage ? "text-black" : "text-green"
+            }`}
             onClick={() => setActiveLink("home")}
           >
             <span>StudySpot PH</span>
           </Link>
         )}
 
+        {/* render nav links only on non-detail pages */}
         {!isSpaceDetailPage && (
-          <div className="flex-grow-0 flex gap-4 px-6 py-1.25 rounded-4xl border-2 bg-white">
+          <div className="absolute left-1/2 transform -translate-x-1/2 flex gap-4 px-6 py-1.25 rounded-4xl border-2 bg-white">
             <Link
               to="/#home"
               className={getLinkClasses("home")}
@@ -167,6 +179,7 @@ const Navbar = () => {
         )}
 
         <div className="flex-shrink-0 flex items-center gap-4">
+          {/* bookings link (shown only on space detail pages) */}
           {isSpaceDetailPage && (
             <Link
               to="/my-bookings"
@@ -177,7 +190,6 @@ const Navbar = () => {
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
               >
                 <path
                   strokeLinecap="round"
@@ -190,6 +202,7 @@ const Navbar = () => {
             </Link>
           )}
 
+          {/* show login or profile dropdown depending on auth status */}
           {isLoggedIn ? (
             <div
               className="relative bg-white py-2 px-4 border-2 rounded-4xl"
@@ -213,7 +226,6 @@ const Navbar = () => {
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
                 >
                   <path
                     strokeLinecap="round"
@@ -224,6 +236,7 @@ const Navbar = () => {
                 </svg>
               </button>
 
+              {/* Profile dropdown menu */}
               {isProfileDropdownOpen && (
                 <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50 border border-gray-200">
                   <button

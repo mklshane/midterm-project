@@ -3,26 +3,33 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useBookings } from "@/contexts/BookingsContext";
 
 const BookingPanel = ({ space, bookingDetails, onBookingChange }) => {
-  const { isLoggedIn } = useAuth();
-  const { bookings, addBooking } = useBookings();
+  const { isLoggedIn } = useAuth(); 
+  const { bookings, addBooking } = useBookings(); 
   const { id: spaceId, name, price, time_slots } = space;
 
-  // Check if a time slot is already booked for the selected date
+  /**
+   * Check if a specific time slot is already booked for a given date
+   * Prevents users from double-booking the same slot
+   */
   const isTimeSlotBooked = (date, timeSlot) => {
     return bookings.some(
       (booking) =>
         booking.spaceId === spaceId &&
         booking.date === date &&
         booking.timeSlot === timeSlot &&
-        booking.status !== "cancelled"
+        booking.status !== "cancelled" // cancelled slots are available again
     );
   };
 
+  /**
+   * Handle booking submission
+   * Validates required fields, then creates and stores a booking
+   */
   const handleBookNow = () => {
     if (!bookingDetails.date || !bookingDetails.timeSlot) return;
 
     const newBooking = {
-      id: Date.now().toString(),
+      id: Date.now().toString(), 
       spaceId: spaceId,
       spaceName: name,
       date: bookingDetails.date,
@@ -32,15 +39,18 @@ const BookingPanel = ({ space, bookingDetails, onBookingChange }) => {
       image: space.main_image,
     };
 
-    addBooking(newBooking);
-    onBookingChange("timeSlot", "");
+    addBooking(newBooking); // save booking in context
+    onBookingChange("timeSlot", ""); // reset time slot after booking
   };
 
+  /**
+   * Pass changes back to parent (date or timeSlot updates)
+   */
   const handleBookingChange = (field, value) => {
     onBookingChange(field, value);
   };
 
-  // Check if selected slot is booked (for UI feedback)
+  // check if the selected slot is already booked
   const isSelectedSlotBooked =
     bookingDetails.date &&
     bookingDetails.timeSlot &&
@@ -50,6 +60,7 @@ const BookingPanel = ({ space, bookingDetails, onBookingChange }) => {
     <div className="bg-white rounded-2xl shadow-xl p-6 sticky top-6">
       {isLoggedIn ? (
         <>
+          {/* Title */}
           <h2 className="text-xl font-semibold mb-4 text-gray-800">
             Book This Space
           </h2>
@@ -65,7 +76,8 @@ const BookingPanel = ({ space, bookingDetails, onBookingChange }) => {
               value={bookingDetails.date}
               onChange={(e) => {
                 handleBookingChange("date", e.target.value);
-                // Only reset time slot if the newly selected date makes the current time slot invalid
+
+                // if slot becomes invalid after date change, reset it
                 if (bookingDetails.timeSlot && bookingDetails.date) {
                   const isStillValid = !isTimeSlotBooked(
                     e.target.value,
@@ -76,7 +88,7 @@ const BookingPanel = ({ space, bookingDetails, onBookingChange }) => {
                   }
                 }
               }}
-              min={new Date().toISOString().split("T")[0]}
+              min={new Date().toISOString().split("T")[0]} // prevent past dates
             />
           </div>
 
@@ -111,6 +123,8 @@ const BookingPanel = ({ space, bookingDetails, onBookingChange }) => {
                     );
                   })}
                 </select>
+
+                {/* dropdown arrow */}
                 <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-gray-700">
                   <svg
                     className="h-4 w-4"
@@ -135,14 +149,14 @@ const BookingPanel = ({ space, bookingDetails, onBookingChange }) => {
           <div className="pt-2 mb-4">
             <div className="flex justify-between items-center text-lg font-bold mt-3 pt-3 border-t border-gray-200">
               <span>Total</span>
-              <span className="text-green">₱{price}</span>
+              <span className="text-black">₱{price}</span>
             </div>
           </div>
 
           {/* Book Now Button */}
           <button
             onClick={handleBookNow}
-            className="w-full bg-black hover:bg-gray-800 text-white py-3 px-6 rounded-4xl font-semibold transition-all duration-300 hover:scale-103 disabled:bg-gray-400 disabled:cursor-not-allowed disabled:transform-none"
+            className="w-full bg-green hover:bg-black hover:text-green hover:border text-black py-3 px-6 rounded-4xl font-semibold transition-all duration-300 hover:scale-103 disabled:bg-gray-400 disabled:cursor-not-allowed disabled:transform-none"
             disabled={
               !bookingDetails.date ||
               !bookingDetails.timeSlot ||
@@ -160,7 +174,7 @@ const BookingPanel = ({ space, bookingDetails, onBookingChange }) => {
         <div className="text-center py-8">
           <div className="w-20 h-20 bg-green/20 rounded-full flex items-center justify-center mx-auto mb-6">
             <svg
-              className="w-10 h-10 text-green"
+              className="w-10 h-10 text-black/80"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"

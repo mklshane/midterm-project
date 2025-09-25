@@ -1,6 +1,5 @@
 import React from "react";
 import Navbar from "@/components/HomeComponents/Navbar";
-import { Link } from "react-router";
 
 const LoginRequired = () => {
   return (
@@ -29,12 +28,7 @@ const LoginRequired = () => {
           <p className="text-gray-600 mb-8">
             Please log in to view your bookings and manage your reserved spaces.
           </p>
-          <Link
-            to="/login"
-            className="inline-flex items-center px-6 py-3 bg-black text-white rounded-xl font-medium hover:bg-gray-800 transition-colors"
-          >
-            Log In
-          </Link>
+         
         </div>
       </div>
     </div>

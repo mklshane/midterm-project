@@ -39,7 +39,7 @@ const SpaceCard = ({ space }) => {
           </p>
 
           <Link to={`/space/${id}`} state={{ space }}>
-            <button className="w-9 h-9 bg-black rounded-full flex items-center justify-center text-white hover:bg-gray-800 transition-all duration-300 flex-shrink-0">
+            <button className="w-9 h-9 bg-black rounded-full flex items-center justify-center text-white hover:bg-green/70 hover:text-black transition-all duration-300 flex-shrink-0">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="20"
