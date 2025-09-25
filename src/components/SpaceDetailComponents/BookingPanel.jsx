@@ -3,8 +3,8 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useBookings } from "@/contexts/BookingsContext";
 
 const BookingPanel = ({ space, bookingDetails, onBookingChange }) => {
-  const { isLoggedIn } = useAuth(); 
-  const { bookings, addBooking } = useBookings(); 
+  const { isLoggedIn } = useAuth();
+  const { bookings, addBooking } = useBookings();
   const { id: spaceId, name, price, time_slots } = space;
 
   /**
@@ -22,6 +22,55 @@ const BookingPanel = ({ space, bookingDetails, onBookingChange }) => {
   };
 
   /**
+   * Check if a time slot is in the future for the selected date
+   */
+  const isTimeSlotInFuture = (date, timeSlot) => {
+    if (!date || !timeSlot) return true; // If no date or slot, don't filter yet
+
+    const now = new Date();
+    const selectedDate = new Date(date);
+    const currentDate = new Date(now.toISOString().split("T")[0]);
+
+    // If the selected date is before today, no slots are available
+    if (selectedDate < currentDate) return false;
+
+    // If the selected date is today, check if the time slot is in the future
+    if (selectedDate.toDateString() === currentDate.toDateString()) {
+      // Parse the time slot (assumes format like "9am - 1pm" or "Morning")
+      let slotStartTime;
+      if (timeSlot.includes("-")) {
+        // For formats like "9am - 1pm"
+        const startTimeStr = timeSlot.split(" - ")[0];
+        const [hours, minutes = "00"] = startTimeStr.match(/\d+/)[0].split(":");
+        const isPM = startTimeStr.toLowerCase().includes("pm");
+        slotStartTime = new Date(date);
+        slotStartTime.setHours(
+          parseInt(hours) + (isPM && hours !== "12" ? 12 : 0),
+          parseInt(minutes)
+        );
+      } else {
+        // for vague slots like "Morning", "Afternoon", "Evening"
+        const slotMap = {
+          Morning: 6, // morning starts at 6 AM
+          Afternoon: 12, // afternoon starts at 12 PM
+          Evening: 17, // evening starts at 5 PM
+          "Full Day": 0, // Full Day starts at midnight
+          "Night Shift": 21, // Night Shift starts at 9 PM
+          "Night Owl Pass": 21, // Night Owl Pass starts at 9 PM
+          "Night Pass": 21, // Night Pass starts at 9 PM
+        };
+        slotStartTime = new Date(date);
+        slotStartTime.setHours(slotMap[timeSlot] || 0, 0);
+      }
+
+      return slotStartTime > now;
+    }
+
+    // If the date is in the future, all slots are available
+    return true;
+  };
+
+  /**
    * Handle booking submission
    * Validates required fields, then creates and stores a booking
    */
@@ -29,7 +78,7 @@ const BookingPanel = ({ space, bookingDetails, onBookingChange }) => {
     if (!bookingDetails.date || !bookingDetails.timeSlot) return;
 
     const newBooking = {
-      id: Date.now().toString(), 
+      id: Date.now().toString(),
       spaceId: spaceId,
       spaceName: name,
       date: bookingDetails.date,
@@ -48,13 +97,24 @@ const BookingPanel = ({ space, bookingDetails, onBookingChange }) => {
    */
   const handleBookingChange = (field, value) => {
     onBookingChange(field, value);
+
+    // If slot becomes invalid after date change, reset it
+    if (field === "date" && bookingDetails.timeSlot && bookingDetails.date) {
+      const isStillValid =
+        !isTimeSlotBooked(value, bookingDetails.timeSlot) &&
+        isTimeSlotInFuture(value, bookingDetails.timeSlot);
+      if (!isStillValid) {
+        handleBookingChange("timeSlot", "");
+      }
+    }
   };
 
-  // check if the selected slot is already booked
-  const isSelectedSlotBooked =
+  // Check if the selected slot is already booked or in the past
+  const isSelectedSlotBookedOrPast =
     bookingDetails.date &&
     bookingDetails.timeSlot &&
-    isTimeSlotBooked(bookingDetails.date, bookingDetails.timeSlot);
+    (isTimeSlotBooked(bookingDetails.date, bookingDetails.timeSlot) ||
+      !isTimeSlotInFuture(bookingDetails.date, bookingDetails.timeSlot));
 
   return (
     <div className="bg-white rounded-2xl shadow-xl p-6 sticky top-6">
@@ -74,20 +134,7 @@ const BookingPanel = ({ space, bookingDetails, onBookingChange }) => {
               type="date"
               className="w-full p-3 border border-gray-300 rounded-xl text-sm focus:ring-2 focus:ring-green focus:border-transparent"
               value={bookingDetails.date}
-              onChange={(e) => {
-                handleBookingChange("date", e.target.value);
-
-                // if slot becomes invalid after date change, reset it
-                if (bookingDetails.timeSlot && bookingDetails.date) {
-                  const isStillValid = !isTimeSlotBooked(
-                    e.target.value,
-                    bookingDetails.timeSlot
-                  );
-                  if (!isStillValid) {
-                    handleBookingChange("timeSlot", "");
-                  }
-                }
-              }}
+              onChange={(e) => handleBookingChange("date", e.target.value)}
               min={new Date().toISOString().split("T")[0]} // prevent past dates
             />
           </div>
@@ -111,14 +158,21 @@ const BookingPanel = ({ space, bookingDetails, onBookingChange }) => {
                     const isBooked =
                       bookingDetails.date &&
                       isTimeSlotBooked(bookingDetails.date, slot);
+                    const isPast =
+                      bookingDetails.date &&
+                      !isTimeSlotInFuture(bookingDetails.date, slot);
+                    const isDisabled = isBooked || isPast;
                     return (
                       <option
                         key={index}
                         value={slot}
-                        disabled={isBooked}
-                        className={isBooked ? "text-gray-400 bg-gray-100" : ""}
+                        disabled={isDisabled}
+                        className={
+                          isDisabled ? "text-gray-400 bg-gray-100" : ""
+                        }
                       >
-                        {slot} {isBooked && "(Booked)"}
+                        {slot} {isBooked && "(Booked)"}{" "}
+                        {isPast && !isBooked && "(Past)"}
                       </option>
                     );
                   })}
@@ -160,7 +214,7 @@ const BookingPanel = ({ space, bookingDetails, onBookingChange }) => {
             disabled={
               !bookingDetails.date ||
               !bookingDetails.timeSlot ||
-              isSelectedSlotBooked
+              isSelectedSlotBookedOrPast
             }
           >
             Book Now
