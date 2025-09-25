@@ -156,7 +156,7 @@ const BookingPanel = ({ space, bookingDetails, onBookingChange }) => {
           {/* Book Now Button */}
           <button
             onClick={handleBookNow}
-            className="w-full bg-green hover:bg-black hover:text-green hover:border text-black py-3 px-6 rounded-4xl font-semibold transition-all duration-300 hover:scale-103 disabled:bg-gray-400 disabled:cursor-not-allowed disabled:transform-none"
+            className="w-full bg-green hover:bg-black hover:text-green hover:border text-black py-3 px-6 rounded-4xl font-semibold transition-all duration-300 hover:scale-103 disabled:bg-gray-400 disabled:text-black disabled:hover:scale-100 disabled:cursor-not-allowed disabled:transform-none"
             disabled={
               !bookingDetails.date ||
               !bookingDetails.timeSlot ||
