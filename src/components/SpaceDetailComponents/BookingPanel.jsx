@@ -54,6 +54,8 @@ const BookingPanel = ({ space, bookingDetails, onBookingChange }) => {
 
         // convert time strings to 24-hour format
         const parseTime = (timeStr) => {
+          if (!timeStr) return null;
+
           const time = timeStr.trim();
           const isPM = time.toLowerCase().includes("pm");
           const hourMatch = time.match(/(\d+)/);
