@@ -17,56 +17,100 @@ const BookingPanel = ({ space, bookingDetails, onBookingChange }) => {
         booking.spaceId === spaceId &&
         booking.date === date &&
         booking.timeSlot === timeSlot &&
-        booking.status !== "cancelled" // cancelled slots are available again
+        booking.status !== "cancelled"
     );
   };
 
   /**
-   * Check if a time slot is in the future for the selected date
+   * Check if a time slot is available for the selected date
+   * Full day passes have no time restrictions
+   * Current time slot is available if we're currently within its time range
    */
-  const isTimeSlotInFuture = (date, timeSlot) => {
+  const isTimeSlotAvailable = (date, timeSlot) => {
     if (!date || !timeSlot) return true; // If no date or slot, don't filter yet
+
+    // full day passes are always available regardless of current time
+    const fullDayPasses = ["Full Day", "Full Day Pass", "24 Hours", "All Day"];
+    if (fullDayPasses.some((pass) => timeSlot.includes(pass))) return true;
 
     const now = new Date();
     const selectedDate = new Date(date);
     const currentDate = new Date(now.toISOString().split("T")[0]);
 
-    // If the selected date is before today, no slots are available
+    // if the selected date is before today, no slots are available
     if (selectedDate < currentDate) return false;
 
-    // If the selected date is today, check if the time slot is in the future
+    // if the selected date is today, check time slot availability
     if (selectedDate.toDateString() === currentDate.toDateString()) {
-      // Parse the time slot (assumes format like "9am - 1pm" or "Morning")
-      let slotStartTime;
-      if (timeSlot.includes("-")) {
-        // For formats like "9am - 1pm"
-        const startTimeStr = timeSlot.split(" - ")[0];
-        const [hours, minutes = "00"] = startTimeStr.match(/\d+/)[0].split(":");
-        const isPM = startTimeStr.toLowerCase().includes("pm");
-        slotStartTime = new Date(date);
-        slotStartTime.setHours(
-          parseInt(hours) + (isPM && hours !== "12" ? 12 : 0),
-          parseInt(minutes)
-        );
-      } else {
-        // for vague slots like "Morning", "Afternoon", "Evening"
-        const slotMap = {
-          Morning: 6, // morning starts at 6 AM
-          Afternoon: 12, // afternoon starts at 12 PM
-          Evening: 17, // evening starts at 5 PM
-          "Full Day": 0, // Full Day starts at midnight
-          "Night Shift": 21, // Night Shift starts at 9 PM
-          "Night Owl Pass": 21, // Night Owl Pass starts at 9 PM
-          "Night Pass": 21, // Night Pass starts at 9 PM
-        };
-        slotStartTime = new Date(date);
-        slotStartTime.setHours(slotMap[timeSlot] || 0, 0);
+      // extract time range from slot name (e.g., "Morning (8 AM - 12 PM)" -> "8 AM - 12 PM")
+      let timeRange = timeSlot;
+      if (timeSlot.includes("(") && timeSlot.includes(")")) {
+        timeRange = timeSlot.match(/\(([^)]+)\)/)[1]; 
       }
 
-      return slotStartTime > now;
+      // parse the time range
+      if (timeRange.includes("-")) {
+        const [startTimeStr, endTimeStr] = timeRange.split(" - ");
+
+        // convert time strings to 24-hour format
+        const parseTime = (timeStr) => {
+          const time = timeStr.trim();
+          const isPM = time.toLowerCase().includes("pm");
+          const hourMatch = time.match(/(\d+)/);
+          if (!hourMatch) return null;
+
+          let hours = parseInt(hourMatch[1]);
+          if (isPM && hours !== 12) hours += 12;
+          if (!isPM && hours === 12) hours = 0;
+
+          return hours;
+        };
+
+        const startHour = parseTime(startTimeStr);
+        const endHour = parseTime(endTimeStr);
+        const currentHour = now.getHours();
+
+        if (startHour !== null && endHour !== null) {
+          // check if we're currently within this time slot
+          const isCurrentlyInSlot =
+            currentHour >= startHour && currentHour < endHour;
+          if (isCurrentlyInSlot) return true;
+
+          // if not currently in slot, check if it's in the future
+          return startHour > currentHour;
+        }
+      }
+
+      // for slots without specific time ranges, use default logic
+      const slotMap = {
+        Morning: 6,
+        Afternoon: 12,
+        Evening: 17,
+        "Night Shift": 21,
+        "Night Owl Pass": 21,
+        "Night Pass": 21,
+      };
+
+      // find matching slot name
+      for (const [slotName, startHour] of Object.entries(slotMap)) {
+        if (timeSlot.includes(slotName)) {
+          const currentHour = now.getHours();
+          // check if we're currently within this time slot
+          const isCurrentlyInSlot =
+            (slotName === "Morning" && currentHour >= 6 && currentHour < 12) ||
+            (slotName === "Afternoon" &&
+              currentHour >= 12 &&
+              currentHour < 18) ||
+            (slotName === "Evening" && currentHour >= 17 && currentHour < 23) ||
+            (slotName.includes("Night") &&
+              (currentHour >= 21 || currentHour < 6));
+
+          if (isCurrentlyInSlot) return true;
+          return startHour > currentHour;
+        }
+      }
     }
 
-    // If the date is in the future, all slots are available
     return true;
   };
 
@@ -88,8 +132,8 @@ const BookingPanel = ({ space, bookingDetails, onBookingChange }) => {
       image: space.main_image,
     };
 
-    addBooking(newBooking); // save booking in context
-    onBookingChange("timeSlot", ""); // reset time slot after booking
+    addBooking(newBooking);
+    onBookingChange("timeSlot", "");
   };
 
   /**
@@ -98,23 +142,23 @@ const BookingPanel = ({ space, bookingDetails, onBookingChange }) => {
   const handleBookingChange = (field, value) => {
     onBookingChange(field, value);
 
-    // If slot becomes invalid after date change, reset it
+    // if slot becomes invalid after date change, reset it
     if (field === "date" && bookingDetails.timeSlot && bookingDetails.date) {
       const isStillValid =
         !isTimeSlotBooked(value, bookingDetails.timeSlot) &&
-        isTimeSlotInFuture(value, bookingDetails.timeSlot);
+        isTimeSlotAvailable(value, bookingDetails.timeSlot);
       if (!isStillValid) {
         handleBookingChange("timeSlot", "");
       }
     }
   };
 
-  // Check if the selected slot is already booked or in the past
-  const isSelectedSlotBookedOrPast =
+  // check if the selected slot is already booked or unavailable
+  const isSelectedSlotBookedOrUnavailable =
     bookingDetails.date &&
     bookingDetails.timeSlot &&
     (isTimeSlotBooked(bookingDetails.date, bookingDetails.timeSlot) ||
-      !isTimeSlotInFuture(bookingDetails.date, bookingDetails.timeSlot));
+      !isTimeSlotAvailable(bookingDetails.date, bookingDetails.timeSlot));
 
   return (
     <div className="bg-white rounded-2xl shadow-xl p-6 sticky top-6">
@@ -158,10 +202,10 @@ const BookingPanel = ({ space, bookingDetails, onBookingChange }) => {
                     const isBooked =
                       bookingDetails.date &&
                       isTimeSlotBooked(bookingDetails.date, slot);
-                    const isPast =
+                    const isUnavailable =
                       bookingDetails.date &&
-                      !isTimeSlotInFuture(bookingDetails.date, slot);
-                    const isDisabled = isBooked || isPast;
+                      !isTimeSlotAvailable(bookingDetails.date, slot);
+                    const isDisabled = isBooked || isUnavailable;
                     return (
                       <option
                         key={index}
@@ -172,7 +216,7 @@ const BookingPanel = ({ space, bookingDetails, onBookingChange }) => {
                         }
                       >
                         {slot} {isBooked && "(Booked)"}{" "}
-                        {isPast && !isBooked && "(Past)"}
+                        {isUnavailable && !isBooked && "(Unavailable)"}
                       </option>
                     );
                   })}
@@ -214,7 +258,7 @@ const BookingPanel = ({ space, bookingDetails, onBookingChange }) => {
             disabled={
               !bookingDetails.date ||
               !bookingDetails.timeSlot ||
-              isSelectedSlotBookedOrPast
+              isSelectedSlotBookedOrUnavailable
             }
           >
             Book Now

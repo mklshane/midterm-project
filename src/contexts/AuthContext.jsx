@@ -9,12 +9,14 @@ export function AuthProvider({ children }) {
   const [userName, setUserName] = useLocalStorage("userName", "");
   const { addToast } = useToast();
 
+  // handles user login
   const login = (name) => {
     setIsLoggedIn(true);
     setUserName(name);
     addToast(`Welcome back, ${name}!`, "success");
   };
 
+  // handles user logout
   const logout = () => {
     setIsLoggedIn(false);
     setUserName("");

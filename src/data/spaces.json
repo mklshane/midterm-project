@@ -19,11 +19,14 @@
   },
   {
     "id": 2,
-    "name": "HavenWorks Makati",
+    "name": "WorkHaven Makati",
     "location": "Makati City, Metro Manila",
     "price": 500,
     "main_image": "/assets/spaces/workhaven/main.jpg",
-    "images": ["/assets/spaces/workhaven/wkh1.jpg", "/assets/spaces/workhaven/wkh2.jpg"],
+    "images": [
+      "/assets/spaces/workhaven/wkh1.jpg",
+      "/assets/spaces/workhaven/wkh2.jpg"
+    ],
     "description": "A professional co-working environment in the heart of the business district. Ideal for meetings, collaborations, and networking.",
     "amenities": [
       "Fiber Internet",
@@ -41,7 +44,10 @@
     "location": "Quezon City, Metro Manila",
     "price": 250,
     "main_image": "/assets/spaces/brainery/main.jpg",
-    "images": ["/assets/spaces/brainery/br1.jpg", "/assets/spaces/brainery/br2.jpg"],
+    "images": [
+      "/assets/spaces/brainery/br1.jpg",
+      "/assets/spaces/brainery/br2.jpg"
+    ],
     "description": "A study café built for students preparing for exams, with silent zones and focus rooms.",
     "amenities": [
       "Silent Pods",
@@ -59,7 +65,10 @@
     "location": "Ermita, Manila",
     "price": 350,
     "main_image": "/assets/spaces/mindspace/main.jpg",
-    "images": ["/assets/spaces/mindspace/md1.jpg", "/assets/spaces/mindspace/md2.jpg" ],
+    "images": [
+      "/assets/spaces/mindspace/md1.jpg",
+      "/assets/spaces/mindspace/md2.jpg"
+    ],
     "description": "A modern co-working hub with sleek interiors and conference facilities perfect for professionals and freelancers.",
     "amenities": [
       "Conference Rooms",
@@ -69,7 +78,11 @@
       "Printing Services"
     ],
     "hours": "9:00 AM - 11:00 PM",
-    "time_slots": ["Morning", "Afternoon", "Evening"]
+    "time_slots": [
+      "Morning (9 AM - 12 PM)",
+      "Afternoon (12 PM - 5 PM)",
+      "Evening (5 PM - 9 PM)"
+    ]
   },
   {
     "id": 5,
@@ -77,7 +90,10 @@
     "location": "Los Baños, Laguna",
     "price": 280,
     "main_image": "/assets/spaces/laguna/main.jpg",
-    "images": ["/assets/spaces/laguna/lg1.jpg", "/assets/spaces/laguna/lg2.jpg"],
+    "images": [
+      "/assets/spaces/laguna/lg1.jpg",
+      "/assets/spaces/laguna/lg2.jpg"
+    ],
     "description": "A collaborative study and work hub located near the university belt of Laguna.",
     "amenities": [
       "Study Rooms",
@@ -87,7 +103,11 @@
       "Air-conditioned"
     ],
     "hours": "8:00 AM - 8:00 PM",
-    "time_slots": ["Morning", "Afternoon", "Evening"]
+    "time_slots": [
+      "Morning (8 AM - 12 PM)",
+      "Afternoon (12 PM - 4 PM)",
+      "Evening (4 PM - 8 PM)"
+    ]
   },
   {
     "id": 6,
@@ -95,7 +115,10 @@
     "location": "Batangas City, Batangas",
     "price": 230,
     "main_image": "/assets/spaces/batstudy/main.jpg",
-    "images": ["/assets/spaces/batstudy/bats1.jpg", "/assets/spaces/batstudy/bats2.jpg"],
+    "images": [
+      "/assets/spaces/batstudy/bats1.jpg",
+      "/assets/spaces/batstudy/bats2.jpg"
+    ],
     "description": "A minimalist café dedicated to students and freelancers seeking a quiet, productive environment.",
     "amenities": [
       "Free Coffee",
@@ -113,7 +136,10 @@
     "location": "Dasmariñas, Cavite",
     "price": 270,
     "main_image": "/assets/spaces/cavitework/main.jpg",
-    "images": ["/assets/spaces/cavitework/cav1.jpg", "/assets/spaces/cavitework/cav2.jpg"],
+    "images": [
+      "/assets/spaces/cavitework/cav1.jpg",
+      "/assets/spaces/cavitework/cav2.jpg"
+    ],
     "description": "A friendly co-working café with both individual and group seating options.",
     "amenities": [
       "Group Tables",
@@ -123,7 +149,11 @@
       "Air-conditioning"
     ],
     "hours": "8:00 AM - 9:00 PM",
-    "time_slots": ["Morning", "Afternoon", "Evening"]
+    "time_slots": [
+      "Morning (8 AM - 12 PM)",
+      "Afternoon (12 PM - 5 PM)",
+      "Evening (5 PM - 9 PM)"
+    ]
   },
   {
     "id": 8,
@@ -131,7 +161,10 @@
     "location": "Muntinlupa City, Metro Manila",
     "price": 400,
     "main_image": "/assets/spaces/alabangfocus/main.jpg",
-    "images": ["/assets/spaces/alabangfocus/alab1.jpg", "/assets/spaces/alabangfocus/alab2.jpg"],
+    "images": [
+      "/assets/spaces/alabangfocus/alab1.jpg",
+      "/assets/spaces/alabangfocus/alab2.jpg"
+    ],
     "description": "A premium hub in Alabang for remote workers and corporate teams.",
     "amenities": [
       "Conference Rooms",
@@ -141,7 +174,7 @@
       "Ergonomic Seating"
     ],
     "hours": "Open 24/7",
-    "time_slots": ["Full Day Pass", "Night Pass"]
+    "time_slots": ["Full Day Pass", "Night Pass (9 PM - 6 AM)"]
   },
   {
     "id": 9,
@@ -149,7 +182,10 @@
     "location": "Lucena City, Quezon Province",
     "price": 220,
     "main_image": "/assets/spaces/qstud/main.jpg",
-    "images": ["/assets/spaces/qstud/qzn1.jpg", "/assets/spaces/qstud/qzn2.jpg"],
+    "images": [
+      "/assets/spaces/qstud/qzn1.jpg",
+      "/assets/spaces/qstud/qzn2.jpg"
+    ],
     "description": "A relaxed, budget-friendly lounge for students and freelancers in Lucena.",
     "amenities": [
       "Wi-Fi",
@@ -159,7 +195,11 @@
       "Air-conditioning"
     ],
     "hours": "9:00 AM - 9:00 PM",
-    "time_slots": ["Morning", "Afternoon", "Evening"]
+    "time_slots": [
+      "Morning (9 AM - 12 PM)",
+      "Afternoon (12 PM - 5 PM)",
+      "Evening (5 PM - 9 PM)"
+    ]
   },
   {
     "id": 10,
@@ -167,7 +207,10 @@
     "location": "Antipolo, Rizal",
     "price": 260,
     "main_image": "/assets/spaces/rizcol/main.jpg",
-    "images": ["/assets/spaces/rizcol/riz1.jpg", "/assets/spaces/rizcol/riz2.jpg"],
+    "images": [
+      "/assets/spaces/rizcol/riz1.jpg",
+      "/assets/spaces/rizcol/riz2.jpg"
+    ],
     "description": "A creative co-working space offering city views from the Antipolo hills.",
     "amenities": [
       "Wi-Fi",
@@ -177,7 +220,11 @@
       "Air-conditioning"
     ],
     "hours": "8:00 AM - 10:00 PM",
-    "time_slots": ["Morning", "Afternoon", "Evening"]
+    "time_slots": [
+      "Morning (8 AM - 12 PM)",
+      "Afternoon (12 PM - 5 PM)",
+      "Evening (5 PM - 10 PM)"
+    ]
   },
   {
     "id": 11,
@@ -185,7 +232,10 @@
     "location": "Makati City, Metro Manila",
     "price": 480,
     "main_image": "/assets/spaces/makati/main.jpg",
-    "images": ["/assets/spaces/makati/mak1.jpg", "/assets/spaces/makati/mak2.jpg"],
+    "images": [
+      "/assets/spaces/makati/mak1.jpg",
+      "/assets/spaces/makati/mak2.jpg"
+    ],
     "description": "A modern co-working space tailored for startups and tech professionals.",
     "amenities": [
       "Fast Fiber Internet",
@@ -195,9 +245,8 @@
       "Open Pantry"
     ],
     "hours": "Open 24/7",
-    "time_slots": ["Full Day", "Night Shift"]
+    "time_slots": ["Full Day", "Night Shift (9 PM - 6 AM)"]
   },
-  
   {
     "id": 12,
     "name": "Thinksmiths",
@@ -214,5 +263,10 @@
       "Air-conditioning"
     ],
     "hours": "8:00 AM - 10:00 PM",
-    "time_slots": ["Morning", "Afternoon", "Evening"]
-  }]
+    "time_slots": [
+      "Morning (8 AM - 12 PM)",
+      "Afternoon (12 PM - 5 PM)",
+      "Evening (5 PM - 10 PM)"
+    ]
+  }
+]
