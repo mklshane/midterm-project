@@ -57,7 +57,7 @@
       "Air-conditioned"
     ],
     "hours": "8:00 AM - 10:00 PM",
-    "time_slots": ["8am - 12pm", "12pm - 4pm", "4pm - 8pm"]
+    "time_slots": ["8am - 12pm", "12pm - 4pm", "4pm - 10pm"]
   },
   {
     "id": 4,
@@ -81,7 +81,7 @@
     "time_slots": [
       "Morning (9 AM - 12 PM)",
       "Afternoon (12 PM - 5 PM)",
-      "Evening (5 PM - 9 PM)"
+      "Evening (5 PM - 11 PM)"
     ]
   },
   {

@@ -36,7 +36,7 @@ const Hero = () => {
               className="text-6xl font-bold text-white w-[50%]"
               variants={slideInLeft}
             >
-              Find Your Perfect Place to Focus.
+              Find Your Perfect Place to Focus
             </motion.h1>
             <motion.p
               className="text-xl text-white text-left w-[50%]"
